@@ -8,21 +8,9 @@ public class TestSpawner : NetworkBehaviour {
     [SerializeField]
     private GameObject obj;
 
-    private void Start()
+    public override void OnStartServer()
     {
-
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyUp(KeyCode.Space))
-            CmdSpawnObject();
-    }
-
-    [Command]
-    private void CmdSpawnObject()
-    {
-        GameObject go = Instantiate(obj, new Vector3(0, 0, 10.5f), Quaternion.identity);
-        NetworkServer.Spawn(go);
+        GameObject ballObject = Instantiate(obj, obj.transform.position, Quaternion.identity) as GameObject;
+        NetworkServer.Spawn(ballObject);
     }
 }

@@ -8,29 +8,31 @@ public class BallMovement : NetworkBehaviour {
     [SerializeField]
     private int movementSpeed;
 
+    public int Get_MovementSpeed { get { return Get_MovementSpeed; } }
+
     private Rigidbody rigidbody;
 
-    private Vector2 direction;
+    public Rigidbody Get_Rigidbody { get { return rigidbody; } }
 
-    private int playerWidth, playerPosX, playerPosY;
-    
+    private Vector3 direction;
+
+    public Vector3 Get_Direction
+    {
+        get { return direction; }
+        set { direction = value; }
+    }
+
     private void Start()
     {
-        direction = Vector2.left;
+        direction = Vector3.right;
 
         rigidbody = GetComponent<Rigidbody>();
 
-        rigidbody.AddForce((Vector2)direction * movementSpeed);
+        MoveBall(direction);
     }
 
-    private void Update()
+    public void MoveBall(Vector3 dir)
     {
-        //movement();
-    }
-
-    private void movement()
-    {
-        transform.Translate((Vector2)direction * movementSpeed * Time.deltaTime);
-        //rigidbody.AddForce((Vector2)direction *movementSpeed );
+        rigidbody.velocity = dir * movementSpeed;
     }
 }
