@@ -1,12 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class BallCollision : MonoBehaviour {
+public class BallCollision : NetworkBehaviour {
 
     private BallMovement ballMovement;
+    private BallManager ballManager;
     private void Start()
     {
+        ballManager = GetComponent<BallManager>();
         ballMovement = GetComponent<BallMovement>();
     }
     
@@ -14,6 +17,16 @@ public class BallCollision : MonoBehaviour {
     {
         if (other.gameObject.tag == "Player")
         {
+            if(other.gameObject.layer == LayerMask.NameToLayer("LocalPlayer"))
+            {
+                ballManager.SetStatus(BallManager.BallStatus.me);
+            }
+
+            if(other.gameObject.layer == LayerMask.NameToLayer("ConnectedPlayer"))
+            {
+                ballManager.SetStatus(BallManager.BallStatus.other);
+            }
+
             float y = hitFactor(transform.position, other.transform.position, other.collider.bounds.size.y);
             
             if (other.gameObject.transform.position.x < 0) // left
@@ -29,6 +42,8 @@ public class BallCollision : MonoBehaviour {
                 return;
             }
         }
+
+
     }
 
     private float hitFactor(Vector3 ballPosition, Vector3 playerPosition, float playerHeight)

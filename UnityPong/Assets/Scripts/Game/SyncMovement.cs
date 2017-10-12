@@ -18,18 +18,19 @@ public class SyncMovement : NetworkBehaviour {
         myTransform = GetComponent<Transform>();
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
-        transmitPosition();
+        TransmitPosition();
         lerpPostition();
     }
 
     private void lerpPostition()
     {
-        if (isLocalPlayer)
-            return;
+        if (!isLocalPlayer)
+        {
+            myTransform.position = Vector3.Lerp(myTransform.position, syncPosition, Time.fixedDeltaTime * lerpRate);
+        }
 
-        myTransform.position = Vector3.Lerp(myTransform.position, syncPosition, Time.deltaTime * lerpRate);
     }
 
     [Command]
@@ -39,8 +40,11 @@ public class SyncMovement : NetworkBehaviour {
     }
 
     [ClientCallback]
-    private void transmitPosition()
+    private void TransmitPosition()
     {
+
+        if (!hasAuthority)
+            return;
         CmdPositionToServer(myTransform.position);
     }
 

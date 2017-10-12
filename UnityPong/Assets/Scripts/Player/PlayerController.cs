@@ -10,12 +10,24 @@ public class PlayerController : NetworkBehaviour {
 
     private InputBehaviour input;
 
+    private Rigidbody rigidbody;
+
     private void Start()
     {
         input = FindObjectOfType<InputBehaviour>();
+        rigidbody = GetComponent<Rigidbody>();
+
+        if(isLocalPlayer)
+        {
+            this.gameObject.layer = LayerMask.NameToLayer("LocalPlayer");   // Changes the layer to local player.
+        }
+        else
+        {
+            this.gameObject.layer = LayerMask.NameToLayer("ConnectedPlayer");   // Changes the layer to connected player.
+        }
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         movement();
     }
@@ -24,12 +36,12 @@ public class PlayerController : NetworkBehaviour {
     {
         if (input.Get_Key_Up)
         {
-            transform.Translate(Vector2.up * movementSpeed * Time.deltaTime);
+            rigidbody.MovePosition(rigidbody.position + transform.up* movementSpeed * Time.fixedDeltaTime);
         }
 
         if (input.Get_Key_Down)
         {
-            transform.Translate(Vector2.down * movementSpeed * Time.deltaTime);
+            rigidbody.MovePosition(rigidbody.position + -transform.up * movementSpeed * Time.fixedDeltaTime);
         }
     }
 

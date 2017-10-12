@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 114980354916872956}
   m_Layer: 0
   m_Name: GameScripts
-  m_TagString: Untagged
+  m_TagString: GameController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -83,7 +83,7 @@ MonoBehaviour:
     i13: 83
     i14: 237
     i15: 243
-  m_ServerOnly: 1
+  m_ServerOnly: 0
   m_LocalPlayerAuthority: 0
 --- !u!114 &114980354916872956
 MonoBehaviour:

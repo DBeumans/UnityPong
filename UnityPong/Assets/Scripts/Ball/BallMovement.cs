@@ -24,7 +24,7 @@ public class BallMovement : NetworkBehaviour {
 
     private void Start()
     {
-        direction = Vector3.right;
+        direction = Vector3.left;
 
         rigidbody = GetComponent<Rigidbody>();
 
